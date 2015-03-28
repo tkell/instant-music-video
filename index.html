@@ -1,0 +1,94 @@
+<html
+  <head>
+  	<link type="text/css" rel="stylesheet" href="/css/main.css" />
+  	<title>instantmusicvideo</title>
+  </head>
+    <body>
+    <center>
+	<div id="moogaloop">
+
+	<script src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+	<script>
+		var video_id = {{v_id}};
+		var moogaloop = false;
+	
+		function vimeo_player_loaded(swf_id) {
+			moogaloop = document.getElementById(swf_id);
+			moogaloop.api_setVolume(0);
+			document.getElementById('controls').style.display = '';
+			document.getElementById('vimeo_duration').innerHTML = moogaloop.api_getDuration();
+		}
+
+		// Run the javascript when the page is ready
+		var swf_id = 'moogaloop';
+
+	 	var flashvars = {
+	        clip_id: video_id,
+	        show_portrait: 1,
+	        show_byline: 1,
+	        show_title: 1,
+	        autoplay: 1,
+			js_api: 1, // required in order to use the Javascript API
+			js_onLoad: 'vimeo_player_loaded', // moogaloop will call this JS function when it's done loading (optional)
+			js_swf_id: 'moogaloop' // this will be passed into all event methods so you can keep track of multiple moogaloops (optional)
+	    };
+		var params = {
+			allowscriptaccess: 'always',
+			allowfullscreen: 'true'
+		};
+		var attributes = {};
+		// For more SWFObject documentation visit: http://code.google.com/p/swfobject/wiki/documentation
+		swfobject.embedSWF("http://vimeo.com/moogaloop.swf", swf_id, "720", "540", "9.0.0","expressInstall.swf", flashvars, params, attributes);
+	</script>
+	</div>
+	
+	
+	<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+    <script type="text/javascript">
+      google.load("swfobject", "2.1");
+    </script>    
+	<script type="text/javascript">
+	// This function is automatically called by the player once it loads
+	function onYouTubePlayerReady(playerId) 
+	{
+  		ytplayer = document.getElementById("ytPlayer");
+  		ytplayer.mute();
+  		ytplayer.playVideo();
+	}
+
+	// The "main method" of this sample. Called when someone clicks "Run".
+	var videoID = {{y_id}}
+	var params = { allowScriptAccess: "always" };
+	var atts = { id: "ytPlayer" };
+	swfobject.embedSWF("http://www.youtube.com/v/" + videoID + "&enablejsapi=1&playerapiid=player1", "videoDiv", "720", "540", "8", null, null, params, atts);
+	</script>
+	<div id="videoDiv"></div>
+	
+	<script type="text/javascript">
+		player = document.getElementsByName(obj.id)[0];
+		// add a controller listener so that when a new item is played, the changeFunc() function
+		// is called
+		player.addControllerListener('ITEM', 'changeFunc');
+	
+		player.sendEvent("MUTE", true);
+	</script>
+	{{ss_text}}	
+	
+	
+	<br/>
+	<div id="soundcloud_block">{{sc_embed_html}}</div>
+	<br/>
+	
+	<p>{{permalink}}</p>
+	
+	<form action="/" method="post">
+    	<div><textarea name="v_url" rows="1" cols="60">{{v_url}}</textarea> 
+    	<br/>enter a vimeo or youtube url here.</div>
+    	<div><textarea name="sc_url" rows="1" cols="60">{{sc_url}}</textarea> 
+    	<br/>enter a soundcloud track url here.</div>
+    	<div><input type="submit" value="Get your Spike Jonez on."></div>
+    </form>
+    </center>
+    <p>thanks to connor ashton, jami welch, and the soundcloud crew.</p>	
+    </body>
+</html>
